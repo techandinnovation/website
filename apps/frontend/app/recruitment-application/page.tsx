@@ -5,6 +5,8 @@ import { useForm, SubmitHandler } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { recruitmentSchema, RecruitmentFormData } from '../../../backend/src/utils/zodSchema'; // Adjust path as needed
 import axios from 'axios'; // <-- Import axios
+import { Capsule } from '@/components/Capsule';
+import Link from 'next/link';
 
 
 // Base props for all form controls
@@ -219,7 +221,12 @@ export default function RecruitmentForm() {
     };
 
     return (
-        <div className="min-h-screen bg-[#0e0e0e] text-white flex items-center justify-center p-4 selection:bg-blue-500 selection:text-white">
+        <div className="min-h-screen flex-col bg-[#0e0e0e] text-white flex items-center justify-center p-4 selection:bg-blue-500 selection:text-white">
+            <div className='mb-5'>
+                <Link href="/">
+                    <Capsule text='HOME' variant='cap1'/>
+                </Link>
+            </div>
             <div className="w-full max-w-2xl bg-gray-800 p-6 sm:p-8 rounded-2xl shadow-2xl border border-gray-700">
 
                 {/* --- Thank You State --- */}
