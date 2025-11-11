@@ -1,0 +1,64 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model RecruitmentApplication {
+  id        String   @id @default(uuid())
+  createdAt DateTime @default(now())
+  
+  // Section 1: Basic Details
+  fullName    String
+  email       String   @unique // Prevent duplicate applications
+  phoneNumber String
+  branch      Branch
+  year        Year
+
+  // Section 2: Domain & Skills
+  domains     String[] // Array of strings for multi-select
+  skills      String
+  roleType    RoleType
+  experience  String?  // Optional
+  portfolioLink String? // Optional
+  resumeUrl   String?  // Optional (URL after upload)
+
+  // Section 3: Availability
+  hoursPerWeek          String
+  reasonToJoin          String
+  takeResponsibility    Boolean
+
+  // Section 4: Confirmation
+  confirmedInfo Boolean
+  dataConsent   Boolean
+}
+
+enum Branch {
+  CSE
+  IOT
+  AIML
+  AIDS
+  CSDS
+  CSBS
+  ME
+  CE
+  EX
+  EE
+  ECE
+  OTHER
+}
+
+enum Year {
+  FIRST
+  SECOND
+  THIRD
+  FOURTH
+}
+
+enum RoleType {
+  CORE_TEAM
+  VOLUNTEER
+}
