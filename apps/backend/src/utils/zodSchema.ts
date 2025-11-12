@@ -31,8 +31,7 @@ export const recruitmentSchema = z.object({
         .min(1, { message: "Please select at least one area of interest" }),
 
     skills: z
-        .string()
-        .min(1, { message: "Please list your skills/tools" }),
+        .string(),
 
     roleType: RoleEnum,
 
@@ -54,8 +53,7 @@ export const recruitmentSchema = z.object({
     hoursPerWeek: HoursEnum,
 
     reasonToJoin: z
-        .string()
-        .min(1, { message: "Please tell us why you want to join" }),
+        .string(),
 
     takeResponsibility: z.boolean(),
 
