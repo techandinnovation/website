@@ -32,7 +32,7 @@ export const recruitmentSchema = z.object({
 
     skills: z
         .string()
-        .min(5, { message: "Please list your skills/tools" }),
+        .min(1, { message: "Please list your skills/tools" }),
 
     roleType: RoleEnum,
 
@@ -55,12 +55,7 @@ export const recruitmentSchema = z.object({
 
     reasonToJoin: z
         .string()
-        .min(50, { message: "Please write at least a few sentences about why you want to join." })
-        .max(2000, { message: "Text is too long." })
-        // Custom validation for word count (approximate)
-        .refine((val) => val.trim().split(/\s+/).length >= 10, {
-            message: "Please provide a more detailed answer (min 10 words).",
-        }),
+        .min(1, { message: "Please tell us why you want to join" }),
 
     takeResponsibility: z.boolean(),
 
