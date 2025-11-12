@@ -12,7 +12,7 @@ export const submitApplication = async (req: Request, res: Response) => {
                 details: validationResult.error.format()
             });
         }
-        
+
         const data = validationResult.data;
 
         const existingUser = await prisma.recruitmentApplication.findUnique({
@@ -43,6 +43,25 @@ export const submitApplication = async (req: Request, res: Response) => {
         res.status(500).json({
             message: "Something Went Wrong, Please Try Again Later"
         });
+        return;
+    }
+};
+
+export const getAllApplications = async (req: Request, res: Response) => {
+    try {
+        const applications = await prisma.recruitmentApplication.findMany({
+            // Sort by newest first
+            orderBy: {
+                createdAt: 'desc',
+            },
+        });
+
+        res.status(200).json(applications);
+        return;
+
+    } catch (error) {
+        console.error("Error fetching applications:", error);
+        res.status(500).json({ error: "Internal Server Error" });
         return;
     }
 };

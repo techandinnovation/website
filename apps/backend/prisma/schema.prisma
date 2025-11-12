@@ -7,29 +7,35 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+model admin {
+  id        Int    @id @default(autoincrement())
+  adminName String @unique
+  password  String
+}
+
 model RecruitmentApplication {
   id        String   @id @default(uuid())
   createdAt DateTime @default(now())
-  
+
   // Section 1: Basic Details
   fullName    String
-  email       String   @unique // Prevent duplicate applications
+  email       String @unique // Prevent duplicate applications
   phoneNumber String
   branch      Branch
   year        Year
 
   // Section 2: Domain & Skills
-  domains     String[] // Array of strings for multi-select
-  skills      String
-  roleType    RoleType
-  experience  String?  // Optional
+  domains       String[] // Array of strings for multi-select
+  skills        String
+  roleType      RoleType
+  experience    String? // Optional
   portfolioLink String? // Optional
-  resumeUrl   String?  // Optional (URL after upload)
+  resumeUrl     String? // Optional (URL after upload)
 
   // Section 3: Availability
-  hoursPerWeek          String
-  reasonToJoin          String
-  takeResponsibility    Boolean
+  hoursPerWeek       String
+  reasonToJoin       String
+  takeResponsibility Boolean
 
   // Section 4: Confirmation
   confirmedInfo Boolean

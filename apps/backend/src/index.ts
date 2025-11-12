@@ -2,6 +2,7 @@ import express from "express";
 import cors from "cors";
 import { PORT } from "./config";
 import { RecruitementRouter } from "./routes/recruitmentRoutes";
+import { AdminRouter } from "./routes/adminRoutes";
 
 const app = express();
 
@@ -21,6 +22,7 @@ app.use(cors(corsOptions));
 app.use(express.json());
 
 app.use("/api/v1/recruitment" , RecruitementRouter);
+app.use("/admin" , AdminRouter);
 
 app.get("/" , (req, res) => {
     res.send(`
