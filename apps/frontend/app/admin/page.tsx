@@ -3,7 +3,7 @@
 import { useState, useEffect } from 'react';
 import axios from 'axios';
 // We can import the type from the schema file
-import { RecruitmentFormData } from '../../schemas/recruitment.schema';
+import { RecruitmentFormData } from '../../../backend/src/utils/zodSchema';
 
 // Use the full type from Prisma if available, or extend the form data type
 // This ensures we get fields like 'id' and 'createdAt'
