@@ -637,7 +637,7 @@ export default function RecruitmentForm() {
                                     <motion.button
                                         type="button"
                                         onClick={handleNext}
-                                        className="ml-auto px-8 py-3 bg-linear-to-r from-blue-600 to-cyan-600 hover:from-blue-500 hover:to-cyan-500 rounded-lg font-bold transition-all shadow-lg shadow-blue-500/30"
+                                        className="ml-auto px-4 md:px-8 py-3 bg-linear-to-r from-blue-600 to-cyan-600 hover:from-blue-500 hover:to-cyan-500 rounded-lg font-bold transition-all shadow-lg shadow-blue-500/30"
                                         whileHover={{ scale: 1.08, boxShadow: "0 0 20px rgba(59, 130, 246, 0.6)" }}
                                         whileTap={{ scale: 0.95 }}
                                     >

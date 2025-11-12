@@ -28,7 +28,7 @@ export default function HomePage() {
                 </div>
             </div>
 
-            <div className="mt-20">
+            <div className="mt-20 text-center">
                 <div className="text-white flex justify-center items-center">
                     Click here to Apply for the Tech & Innovation Club Recruitment! 👇🏻
                 </div>
