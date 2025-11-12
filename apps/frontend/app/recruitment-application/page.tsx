@@ -119,6 +119,7 @@ const DOMAIN_OPTIONS = [
     "Content Writing",
     "Marketing",
     "Event Management",
+    "Other",
 ]
 
 const stepFields: (keyof RecruitmentFormData)[][] = [
@@ -164,6 +165,7 @@ export default function RecruitmentForm() {
             roleType: "VOLUNTEER",
             hoursPerWeek: "3-5",
             domains: [],
+            domainOther: "",
             takeResponsibility: false,
             confirmedInfo: false,
             dataConsent: false,
@@ -171,6 +173,7 @@ export default function RecruitmentForm() {
     })
 
     const watchedDomains = watch("domains")
+    const watchedDomainOther = watch("domainOther")
 
     const handleDomainChange = (domain: string) => {
         const currentDomains = watchedDomains || []
@@ -399,8 +402,8 @@ export default function RecruitmentForm() {
                                                     <motion.div
                                                         key={domain}
                                                         className={`flex items-center space-x-3 p-4 rounded-xl cursor-pointer transition-all border ${watchedDomains?.includes(domain)
-                                                                ? "bg-blue-500/30 border-blue-400/60 shadow-lg shadow-blue-500/20"
-                                                                : "bg-gray-800/40 border-white/10 hover:bg-gray-800/60 hover:border-white/20"
+                                                            ? "bg-blue-500/30 border-blue-400/60 shadow-lg shadow-blue-500/20"
+                                                            : "bg-gray-800/40 border-white/10 hover:bg-gray-800/60 hover:border-white/20"
                                                             }`}
                                                         whileHover={{ scale: 1.05 }}
                                                         whileTap={{ scale: 0.95 }}
@@ -421,6 +424,23 @@ export default function RecruitmentForm() {
                                                 ))}
                                             </div>
                                             {errors.domains && <p className="mt-2 text-sm text-red-400">{errors.domains.message}</p>}
+
+                                            {watchedDomains?.includes("Other") && (
+                                                <motion.div
+                                                    initial={{ opacity: 0, y: -10 }}
+                                                    animate={{ opacity: 1, y: 0 }}
+                                                    exit={{ opacity: 0, y: -10 }}
+                                                    transition={{ duration: 0.3 }}
+                                                    className="mt-4"
+                                                >
+                                                    <FormInput
+                                                        name="domainOther"
+                                                        placeholder="Please specify your other domain"
+                                                        register={register}
+                                                        error={errors.domainOther?.message}
+                                                    />
+                                                </motion.div>
+                                            )}
                                         </div>
 
                                         <FormTextarea

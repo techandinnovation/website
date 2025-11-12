@@ -26,7 +26,9 @@ model RecruitmentApplication {
 
   // Section 2: Domain & Skills
   domains       String[] // Array of strings for multi-select
+  domainOther   String?
   skills        String
+  skillsOther   String?
   roleType      RoleType
   experience    String? // Optional
   portfolioLink String? // Optional

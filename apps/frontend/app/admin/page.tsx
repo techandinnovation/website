@@ -144,15 +144,17 @@ const AdminDashboardContent = () => {
             {selectedApp && (
                 <div
                     className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-sm p-4"
-                    onClick={() => setSelectedApp(null)} // Click outside to close
+                    onClick={() => setSelectedApp(null)}
                 >
                     <div
                         className="w-full max-w-lg bg-gray-800 rounded-lg shadow-xl border border-gray-700 max-h-[90vh] overflow-y-auto"
-                        onClick={(e) => e.stopPropagation()} // Prevent modal from closing when clicking inside
+                        onClick={(e) => e.stopPropagation()}
                     >
                         <div className="flex justify-between items-center p-4 border-b border-gray-700">
                             <h3 className="text-xl font-semibold text-white">{selectedApp.fullName}</h3>
-                            <button onClick={() => setSelectedApp(null)} className="text-gray-400 hover:text-white">&times;</button>
+                            <button onClick={() => setSelectedApp(null)} className="text-gray-400 hover:text-white">
+                                &times;
+                            </button>
                         </div>
 
                         <div className="p-6 space-y-4 text-sm">
@@ -160,38 +162,47 @@ const AdminDashboardContent = () => {
                             <InfoRow label="Phone" value={selectedApp.phoneNumber} />
                             <InfoRow label="Branch" value={selectedApp.branch} />
                             <InfoRow label="Year" value={selectedApp.year} />
-                            <InfoRow label="Role" value={selectedApp.roleType.replace('_', ' ')} />
+                            <InfoRow label="Role" value={selectedApp.roleType.replace("_", " ")} />
                             <InfoRow label="Hours/Week" value={selectedApp.hoursPerWeek} />
 
                             <div className="pt-2">
                                 <h4 className="font-semibold text-gray-300 mb-1">Domains</h4>
                                 <div className="flex flex-wrap gap-2">
-                                    {selectedApp.domains.map(domain => (
-                                        <span key={domain} className="px-2 py-0.5 bg-gray-700 text-gray-200 rounded text-xs">{domain}</span>
+                                    {selectedApp.domains.map((domain) => (
+                                        <span key={domain} className="px-2 py-0.5 bg-gray-700 text-gray-200 rounded text-xs">
+                                            {domain}
+                                        </span>
                                     ))}
                                 </div>
                             </div>
 
+                            {selectedApp.domainOther && (
+                                <div>
+                                    <InfoRow label="Domain - Other" value={selectedApp.domainOther} />
+                                </div>
+                            )}
+
                             <InfoRow label="Skills" value={selectedApp.skills} isBlock />
+
+                            {selectedApp.skillsOther && (
+                                <div>
+                                    <InfoRow label="Skills - Other" value={selectedApp.skillsOther} />
+                                </div>
+                            )}
+
                             <InfoRow label="Reason to Join" value={selectedApp.reasonToJoin} isBlock />
 
-                            {selectedApp.experience && (
-                                <InfoRow label="Experience" value={selectedApp.experience} isBlock />
-                            )}
+                            {selectedApp.experience && <InfoRow label="Experience" value={selectedApp.experience} isBlock />}
 
-                            {selectedApp.portfolioLink && (
-                                <InfoRow label="Portfolio" value={selectedApp.portfolioLink} isLink />
-                            )}
+                            {selectedApp.portfolioLink && <InfoRow label="Portfolio" value={selectedApp.portfolioLink} isLink />}
 
-                            {selectedApp.resumeUrl && (
-                                <InfoRow label="Resume" value={selectedApp.resumeUrl} isLink />
-                            )}
+                            {selectedApp.resumeUrl && <InfoRow label="Resume" value={selectedApp.resumeUrl} isLink />}
 
                             <div className="pt-2 border-t border-gray-700 text-gray-400">
                                 <p>Applied on: {new Date(selectedApp.createdAt).toLocaleString()}</p>
-                                <p>Consented to data use: {selectedApp.dataConsent ? 'Yes' : 'No'}</p>
-                                <p>Confirmed info correct: {selectedApp.confirmedInfo ? 'Yes' : 'No'}</p>
-                                <p>Will take responsibility: {selectedApp.takeResponsibility ? 'Yes' : 'No'}</p>
+                                <p>Consented to data use: {selectedApp.dataConsent ? "Yes" : "No"}</p>
+                                <p>Confirmed info correct: {selectedApp.confirmedInfo ? "Yes" : "No"}</p>
+                                <p>Will take responsibility: {selectedApp.takeResponsibility ? "Yes" : "No"}</p>
                             </div>
                         </div>
                     </div>

@@ -26,12 +26,15 @@ export const recruitmentSchema = z.object({
     year: YearEnum,
 
     // Section 2: Domain & Skills
+    domainOther: z.string().optional(),
     domains: z
         .array(z.string())
         .min(1, { message: "Please select at least one area of interest" }),
 
     skills: z
         .string(),
+
+    skillsOther: z.string().optional(),
 
     roleType: RoleEnum,
 
