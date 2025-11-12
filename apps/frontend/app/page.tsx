@@ -17,13 +17,28 @@ export default function HomePage() {
                         Innovation
                     </span>
                 </h1>
+                <div className="text-2xl">
+                    <span className="font-bold bg-gray-400 from-blue-400 to-blue-700 bg-clip-text text-transparent">
+                        Club
+                    </span>{" "}
+                    <span className="text-gray-400"> , </span>{" "}
+                    <span className="font-bold bg-gray-400 from-blue-400 to-blue-700 bg-clip-text text-transparent">
+                        GGITS
+                    </span>
+                </div>
             </div>
 
-            <div className="flex justify-center animate-bounce items-center mt-20">
-                <Link href="/recruitment-application">
-                    <Capsule variant="cap2" text="Tech & Innovation Recruitment Form!" />
-                </Link>
+            <div className="mt-20">
+                <div className="text-white flex justify-center items-center">
+                    Click here to Apply for the Tech & Innovation Club Recruitment! 👇🏻
+                </div>
+                <div className="flex mt-5 justify-center animate-bounce items-center">
+                    <Link href="/recruitment-application">
+                        <Capsule variant="cap2" text="Tech & Innovation Recruitment Form!" />
+                    </Link>
+                </div>
             </div>
+
         </div>
     )
 }
