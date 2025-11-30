@@ -44,6 +44,23 @@ model RecruitmentApplication {
   dataConsent   Boolean
 }
 
+model Feedback {
+  id          Int      @id @default(autoincrement())
+  type        String // "bug", "feature", "general"..
+  title       String
+  description String
+  email       String?
+  createdAt   DateTime @default(now())
+}
+
+model ContactMessage {
+  id        Int      @id @default(autoincrement())
+  name      String
+  email     String
+  message   String
+  createdAt DateTime @default(now())
+}
+
 enum Branch {
   CSE
   IOT

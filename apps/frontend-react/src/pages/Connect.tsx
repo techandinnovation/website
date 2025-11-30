@@ -1,13 +1,14 @@
 import { useState } from 'react';
 import { motion } from 'framer-motion';
+import axios from 'axios';
 import { Layout } from '@/components/layout/Layout';
 import { SectionHeader } from '@/components/shared/SectionHeader';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
-import { 
-  Mail, MessageSquare, Lightbulb, Bug, Calendar, 
-  Send, MapPin, Phone, Github, Twitter, Linkedin, Instagram
+import {
+  Mail, MessageSquare, Lightbulb, Bug, Calendar,
+  Send, MapPin, Phone, Github, Twitter, Linkedin, Instagram, Loader2
 } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
 
@@ -33,35 +34,154 @@ const feedbackTypes = [
 
 export default function Connect() {
   const { toast } = useToast();
+
+  // Contact Form State
   const [contactForm, setContactForm] = useState({
     name: '',
     email: '',
     subject: '',
     message: '',
   });
+  const [isContactSubmitting, setIsContactSubmitting] = useState(false);
+
+  // Feedback Form State
   const [feedbackForm, setFeedbackForm] = useState({
     type: 'improvement',
     title: '',
     description: '',
     email: '',
   });
+  const [isFeedbackSubmitting, setIsFeedbackSubmitting] = useState(false);
 
-  const handleContactSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    toast({
-      title: 'Message Sent!',
-      description: 'We\'ll get back to you as soon as possible.',
-    });
-    setContactForm({ name: '', email: '', subject: '', message: '' });
+  // Get backend URL - FIXED for React
+  const getBackendUrl = () => {
+    // const backendUrl = process.env.REACT_APP_BACKEND_URL || 'http://localhost:3001'; // not working for some reason, vite-react issues will fix later!
+    const backendUrl = 'https://techandinnovation-api.vercel.app';
+    console.log('Backend URL:', backendUrl);
+    return backendUrl;
   };
 
-  const handleFeedbackSubmit = (e: React.FormEvent) => {
+  // --- Handle Contact Submission ---
+  const handleContactSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    toast({
-      title: 'Feedback Received!',
-      description: 'Thank you for helping us improve.',
-    });
-    setFeedbackForm({ type: 'improvement', title: '', description: '', email: '' });
+    setIsContactSubmitting(true);
+
+    try {
+      const backendUrl = getBackendUrl();
+      const endpoint = `${backendUrl}/api/v1/support/contact`;
+
+      console.log('Sending contact request to:', endpoint);
+
+      const payload = {
+        name: contactForm.name,
+        email: contactForm.email,
+        subject: contactForm.subject,
+        message: contactForm.message
+      };
+
+      console.log('Payload:', payload);
+
+      const response = await axios.post(endpoint, payload, {
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        timeout: 10000,
+      });
+
+      console.log('Contact response:', response);
+
+      toast({
+        title: 'Message Sent!',
+        description: 'We\'ll get back to you as soon as possible.',
+      });
+      setContactForm({ name: '', email: '', subject: '', message: '' });
+
+    } catch (error: any) {
+      console.error('Contact submission error:', error);
+
+      let errorMessage = 'Please try again later.';
+
+      if (axios.isAxiosError(error)) {
+        if (error.code === 'NETWORK_ERROR' || error.code === 'ECONNREFUSED') {
+          errorMessage = 'Cannot connect to server. Please check if backend is running.';
+        } else if (error.response) {
+          // Server responded with error status
+          errorMessage = error.response.data?.error || error.response.data?.message || `Server error: ${error.response.status}`;
+        } else if (error.request) {
+          // Request was made but no response received
+          errorMessage = 'No response received from server. Check if backend is running.';
+        } else {
+          // Something else happened
+          errorMessage = error.message;
+        }
+      } else {
+        errorMessage = error?.message || 'Unknown error occurred';
+      }
+
+      toast({
+        variant: "destructive",
+        title: 'Error sending message',
+        description: errorMessage,
+      });
+    } finally {
+      setIsContactSubmitting(false);
+    }
+  };
+
+  // --- Handle Feedback Submission ---
+  const handleFeedbackSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setIsFeedbackSubmitting(true);
+
+    try {
+      const backendUrl = getBackendUrl();
+      const endpoint = `${backendUrl}/api/v1/support/feedback`;
+
+      console.log('Sending feedback request to:', endpoint);
+      console.log('Feedback payload:', feedbackForm);
+
+      const response = await axios.post(endpoint, feedbackForm, {
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        timeout: 10000,
+      });
+
+      console.log('Feedback response:', response);
+
+      toast({
+        title: 'Feedback Received!',
+        description: 'Thank you for helping us improve.',
+      });
+      setFeedbackForm({ type: 'improvement', title: '', description: '', email: '' });
+
+    } catch (error: any) {
+      console.error('Feedback submission error:', error);
+
+      let errorMessage = 'Please try again later.';
+
+      if (axios.isAxiosError(error)) {
+        if (error.code === 'NETWORK_ERROR' || error.code === 'ECONNREFUSED') {
+          errorMessage = 'Cannot connect to server. Please check if backend is running.';
+        } else if (error.response) {
+          errorMessage = error.response.data?.error || error.response.data?.message || `Server error: ${error.response.status}`;
+        } else if (error.request) {
+          errorMessage = 'No response received from server. Check if backend is running.';
+        } else {
+          errorMessage = error.message;
+        }
+      } else {
+        errorMessage = error?.message || 'Unknown error occurred';
+      }
+
+      toast({
+        variant: "destructive",
+        title: 'Error sending feedback',
+        description: errorMessage,
+      });
+    } finally {
+      setIsFeedbackSubmitting(false);
+    }
   };
 
   return (
@@ -91,7 +211,7 @@ export default function Connect() {
               <h2 className="font-display text-2xl font-bold text-foreground mb-6">
                 Contact Information
               </h2>
-              
+
               <div className="space-y-4 mb-8">
                 {contactInfo.map((item) => (
                   <div key={item.label} className="flex items-center gap-4">
@@ -132,7 +252,7 @@ export default function Connect() {
               <h2 className="font-display text-2xl font-bold text-foreground mb-6">
                 Send us a Message
               </h2>
-              
+
               <form onSubmit={handleContactSubmit} className="space-y-4">
                 <div className="grid sm:grid-cols-2 gap-4">
                   <Input
@@ -140,6 +260,7 @@ export default function Connect() {
                     value={contactForm.name}
                     onChange={(e) => setContactForm({ ...contactForm, name: e.target.value })}
                     required
+                    disabled={isContactSubmitting}
                   />
                   <Input
                     type="email"
@@ -147,6 +268,7 @@ export default function Connect() {
                     value={contactForm.email}
                     onChange={(e) => setContactForm({ ...contactForm, email: e.target.value })}
                     required
+                    disabled={isContactSubmitting}
                   />
                 </div>
                 <Input
@@ -154,6 +276,7 @@ export default function Connect() {
                   value={contactForm.subject}
                   onChange={(e) => setContactForm({ ...contactForm, subject: e.target.value })}
                   required
+                  disabled={isContactSubmitting}
                 />
                 <Textarea
                   placeholder="Your Message"
@@ -161,10 +284,18 @@ export default function Connect() {
                   value={contactForm.message}
                   onChange={(e) => setContactForm({ ...contactForm, message: e.target.value })}
                   required
+                  disabled={isContactSubmitting}
                 />
-                <Button type="submit" variant="gradient" className="w-full sm:w-auto">
-                  <Send className="w-4 h-4" />
-                  Send Message
+                <Button type="submit" variant="default" className="w-full sm:w-auto" disabled={isContactSubmitting}>
+                  {isContactSubmitting ? (
+                    <>
+                      <Loader2 className="w-4 h-4 mr-2 animate-spin" /> Sending...
+                    </>
+                  ) : (
+                    <>
+                      <Send className="w-4 h-4 mr-2" /> Send Message
+                    </>
+                  )}
                 </Button>
               </form>
             </motion.div>
@@ -200,11 +331,10 @@ export default function Connect() {
                       key={type.id}
                       type="button"
                       onClick={() => setFeedbackForm({ ...feedbackForm, type: type.id })}
-                      className={`p-3 rounded-xl border text-sm font-medium transition-all ${
-                        feedbackForm.type === type.id
-                          ? 'border-primary bg-primary/10 text-primary'
-                          : 'border-border bg-card text-muted-foreground hover:border-primary/30'
-                      }`}
+                      className={`p-3 rounded-xl border text-sm font-medium transition-all ${feedbackForm.type === type.id
+                        ? 'border-primary bg-primary/10 text-primary'
+                        : 'border-border bg-card text-muted-foreground hover:border-primary/30'
+                        }`}
                     >
                       <type.icon className="w-5 h-5 mx-auto mb-1" />
                       {type.label}
@@ -219,6 +349,7 @@ export default function Connect() {
                   value={feedbackForm.title}
                   onChange={(e) => setFeedbackForm({ ...feedbackForm, title: e.target.value })}
                   required
+                  disabled={isFeedbackSubmitting}
                 />
                 <Textarea
                   placeholder="Describe your feedback in detail..."
@@ -226,16 +357,25 @@ export default function Connect() {
                   value={feedbackForm.description}
                   onChange={(e) => setFeedbackForm({ ...feedbackForm, description: e.target.value })}
                   required
+                  disabled={isFeedbackSubmitting}
                 />
                 <Input
                   type="email"
                   placeholder="Your Email (optional)"
                   value={feedbackForm.email}
                   onChange={(e) => setFeedbackForm({ ...feedbackForm, email: e.target.value })}
+                  disabled={isFeedbackSubmitting}
                 />
-                <Button type="submit" variant="gradient">
-                  <Send className="w-4 h-4" />
-                  Submit Feedback
+                <Button type="submit" variant="default" disabled={isFeedbackSubmitting}>
+                  {isFeedbackSubmitting ? (
+                    <>
+                      <Loader2 className="w-4 h-4 mr-2 animate-spin" /> Submitting...
+                    </>
+                  ) : (
+                    <>
+                      <Send className="w-4 h-4 mr-2" /> Submit Feedback
+                    </>
+                  )}
                 </Button>
               </div>
             </motion.form>
