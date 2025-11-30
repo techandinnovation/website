@@ -9,8 +9,8 @@ const app = express();
 
 const corsOptions = {
     origin: [
-        'http://localhost:3000',
-        'http://localhost:3001',
+        // 'http://localhost:3000',
+        // 'http://localhost:3001',
         'https://techandinnovation.org',
         'https://www.techandinnovation.org',
         'https://techandinnovation.vercel.app'
