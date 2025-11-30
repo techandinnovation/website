@@ -56,6 +56,7 @@ export default function Connect() {
   // Get backend URL - FIXED for React
   const getBackendUrl = () => {
     // const backendUrl = process.env.REACT_APP_BACKEND_URL || 'http://localhost:3001'; // not working for some reason, vite-react issues will fix later!
+    // const backendUrl = 'http://localhost:3001';
     const backendUrl = 'https://techandinnovation-api.vercel.app';
     console.log('Backend URL:', backendUrl);
     return backendUrl;
@@ -93,6 +94,7 @@ export default function Connect() {
       toast({
         title: 'Message Sent!',
         description: 'We\'ll get back to you as soon as possible.',
+        className: "bg-green-500 text-white border-green-600", // Green styles
       });
       setContactForm({ name: '', email: '', subject: '', message: '' });
 
@@ -152,6 +154,7 @@ export default function Connect() {
       toast({
         title: 'Feedback Received!',
         description: 'Thank you for helping us improve.',
+        className: "bg-green-500 text-white border-green-600", // Green styles
       });
       setFeedbackForm({ type: 'improvement', title: '', description: '', email: '' });
 
