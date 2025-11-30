@@ -8,21 +8,22 @@ import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
 import {
   Mail, MessageSquare, Lightbulb, Bug, Calendar,
-  Send, MapPin, Phone, Github, Twitter, Linkedin, Instagram, Loader2
+  Send, MapPin, Phone, Github, Twitter, Linkedin, Instagram, Loader2,
+  Youtube
 } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
 
 const contactInfo = [
-  { icon: Mail, label: 'Email', value: 'hello@techandinnovation.com' },
-  { icon: MapPin, label: 'Location', value: 'Engineering Campus, Jabalpur' },
-  { icon: Phone, label: 'Phone', value: '+91 9876543210' },
+  { icon: Mail, label: 'Email', value: 'techandinnovation@ggits.org' },
+  // { icon: MapPin, label: 'Location', value: 'Engineering Campus, Jabalpur' },
+  { icon: Phone, label: 'Phone', value: '+91 93016 78588' },
 ];
 
 const socialLinks = [
-  { icon: Github, label: 'GitHub', href: '#' },
-  { icon: Twitter, label: 'Twitter', href: '#' },
-  { icon: Linkedin, label: 'LinkedIn', href: '#' },
-  { icon: Instagram, label: 'Instagram', href: '#' },
+  { icon: Github, href: 'https://github.com/techandinnovation', label: 'GitHub' },
+  { icon: Youtube, href: 'https://youtube.com/@techandinnovationclub', label: 'Youtube' },
+  { icon: Linkedin, href: 'https://www.linkedin.com/company/tech-and-innovation', label: 'LinkedIn' },
+  { icon: Instagram, href: 'https://www.instagram.com/techandinnovationclub', label: 'Instagram' },
 ];
 
 const feedbackTypes = [
