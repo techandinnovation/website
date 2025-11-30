@@ -64,3 +64,39 @@ export const submitContact = async (req: Request, res: Response) => {
     return;
   }
 };
+
+export const getAllFeedback = async (req: Request, res: Response) => {
+  try {
+    const feedbackList = await prisma.feedback.findMany({
+      orderBy: {
+        createdAt: 'desc', // Newest first
+      },
+    });
+
+    res.status(200).json(feedbackList);
+    return;
+
+  } catch (error) {
+    console.error("Error fetching feedback:", error);
+    res.status(500).json({ error: "Internal Server Error" });
+    return;
+  }
+};
+
+export const getAllContactMessages = async (req: Request, res: Response) => {
+  try {
+    const messages = await prisma.contactMessage.findMany({
+      orderBy: {
+        createdAt: 'desc', // Newest first
+      },
+    });
+
+    res.status(200).json(messages);
+    return;
+
+  } catch (error) {
+    console.error("Error fetching contact messages:", error);
+    res.status(500).json({ error: "Internal Server Error" });
+    return;
+  }
+};
