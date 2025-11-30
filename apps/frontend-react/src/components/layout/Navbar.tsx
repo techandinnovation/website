@@ -11,9 +11,9 @@ const navLinks = [
   { href: '/about', label: 'About' },
   { href: '/updates', label: 'Updates' },
   { href: '/courses', label: 'Courses' },
-  { href: '/sessions', label: 'Sessions' },
-  { href: '/gallery', label: 'Gallery' },
-  { href: '/forum', label: 'Forum' },
+  // { href: '/sessions', label: 'Sessions' },
+  // { href: '/gallery', label: 'Gallery' },
+  // { href: '/forum', label: 'Forum' },
   { href: '/connect', label: 'Connect' },
 ];
 
@@ -107,6 +107,9 @@ export function Navbar() {
             {/* Login Button */}
             <Button variant="gradient" size="sm" className="hidden sm:flex">
               Login
+            </Button>
+            <Button variant="hero" size="sm" className="hidden sm:flex">
+              Signup
             </Button>
 
             {/* Mobile Menu Toggle */}

@@ -39,9 +39,8 @@ export function CommunityPreview() {
     <section className="py-20 lg:py-32 bg-secondary/30">
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
         <SectionHeader
-          badge="🗣️ Community"
-          title="Join the Conversation"
-          description="Connect with peers, ask questions, and share your knowledge"
+          title="The Future is Collaborative. Join the Forum."
+          description="Got a doubt? Need a challenge? Dive into our community Forum to get solutions, find collaborators, and chat with fellow tech enthusiasts."
         />
 
         <div className="mt-12 max-w-3xl mx-auto space-y-4">
@@ -58,7 +57,7 @@ export function CommunityPreview() {
                 <div className="w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center flex-shrink-0">
                   <span className="text-sm font-semibold text-primary">{discussion.avatar}</span>
                 </div>
-                
+
                 <div className="flex-1 min-w-0">
                   <div className="flex items-center gap-2 mb-1">
                     <span className="font-medium text-foreground">{discussion.author}</span>
@@ -70,11 +69,11 @@ export function CommunityPreview() {
                       {discussion.category}
                     </span>
                   </div>
-                  
+
                   <h4 className="font-medium text-foreground group-hover:text-primary transition-colors line-clamp-1">
                     {discussion.title}
                   </h4>
-                  
+
                   <div className="flex items-center gap-4 mt-2 text-sm text-muted-foreground">
                     <span className="flex items-center gap-1">
                       <MessageSquare className="w-4 h-4" />

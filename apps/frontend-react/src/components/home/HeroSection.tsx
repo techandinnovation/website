@@ -5,7 +5,7 @@ import { Link } from 'react-router-dom';
 import heroBg from '@/assets/hero-bg.png';
 
 const stats = [
-  { icon: Users, value: '650+', label: 'Active Members' },
+  { icon: Users, value: '1400+', label: 'Active Members' },
   { icon: BookOpen, value: '25+', label: 'Courses' },
   { icon: Trophy, value: '10+', label: 'Hackathons' },
 ];
@@ -14,15 +14,15 @@ export function HeroSection() {
   return (
     <section className="relative min-h-[calc(100vh-5rem)] flex items-center overflow-hidden">
       {/* Background Image for Dark Theme */}
-      <div 
+      <div
         className="absolute inset-0 bg-cover bg-center bg-no-repeat opacity-0 dark:opacity-40 transition-opacity duration-500"
         style={{ backgroundImage: `url(${heroBg})` }}
       />
-      
+
       {/* Background Effects */}
       <div className="absolute inset-0 hero-gradient" />
       <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] glow-bg" />
-      
+
       {/* Floating Elements */}
       <motion.div
         animate={{ y: [0, -20, 0] }}
@@ -50,7 +50,7 @@ export function HeroSection() {
           >
             <span className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-accent text-accent-foreground text-sm font-medium mb-8 backdrop-blur-sm">
               <Sparkles className="w-4 h-4" />
-              Join 650+ students building the future
+              Empowering the Next Generation of Tech Leaders
             </span>
           </motion.div>
 
@@ -72,8 +72,8 @@ export function HeroSection() {
             transition={{ duration: 0.5, delay: 0.2 }}
             className="text-lg sm:text-xl text-muted-foreground max-w-2xl mx-auto mb-10"
           >
-            The largest student-led tech community. Master cutting-edge skills,
-            build real projects, and connect with innovators who are shaping the future.
+            Beyond the textbook. We are a thriving community built on hard work, practical skills, and hands-on innovation. Your journey starts here.
+
           </motion.p>
 
           {/* CTA Buttons */}

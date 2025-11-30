@@ -44,9 +44,8 @@ export function CoursesPreview() {
     <section className="py-20 lg:py-32 bg-secondary/30">
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
         <SectionHeader
-          badge="📚 Courses"
-          title="Master In-Demand Skills"
-          description="Industry-relevant courses designed by experts to accelerate your tech career"
+          title="Skills That Drive Success. Learn by Doing."
+          description="From mastering Full Stack Development to building crucial soft skills and excelling in placement preparation. Get certified and get hired"
         />
 
         <div className="mt-12 grid sm:grid-cols-2 lg:grid-cols-4 gap-6">

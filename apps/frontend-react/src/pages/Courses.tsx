@@ -3,7 +3,7 @@ import { motion } from 'framer-motion';
 import { Layout } from '@/components/layout/Layout';
 import { SectionHeader } from '@/components/shared/SectionHeader';
 import { Button } from '@/components/ui/button';
-import { 
+import {
   Code, Brain, Users, TrendingUp, Palette, Database, Shield, Cloud,
   Clock, Users as UsersIcon, Star, ArrowRight, Filter
 } from 'lucide-react';
@@ -20,133 +20,18 @@ const categories = [
 const courses = [
   {
     id: 1,
-    category: 'webdev',
+    category: 'all',
     icon: Code,
-    title: 'Full Stack Web Development',
-    description: 'Master React, Node.js, MongoDB, and modern web technologies. Build production-ready applications from scratch.',
-    duration: '12 weeks',
-    students: 350,
+    url: "https://youtu.be/EOkItVOgjeE",
+    title: 'Git & GitHub Crash Course',
+    description: 'Master the essential Git & GitHub commands in one short, beginner-focused crash course.',
+    duration: '30 Minutes',
+    students: 250,
     rating: 4.9,
     level: 'Beginner',
     modules: 48,
-    certified: true,
-  },
-  {
-    id: 2,
-    category: 'webdev',
-    icon: Palette,
-    title: 'Frontend Mastery with React',
-    description: 'Deep dive into React ecosystem including Redux, Next.js, and advanced patterns.',
-    duration: '8 weeks',
-    students: 180,
-    rating: 4.8,
-    level: 'Intermediate',
-    modules: 32,
-    certified: true,
-  },
-  {
-    id: 3,
-    category: 'webdev',
-    icon: Database,
-    title: 'Backend Development with Node.js',
-    description: 'Learn server-side development, REST APIs, authentication, and database management.',
-    duration: '10 weeks',
-    students: 145,
-    rating: 4.7,
-    level: 'Intermediate',
-    modules: 40,
-    certified: true,
-  },
-  {
-    id: 4,
-    category: 'dsa',
-    icon: Brain,
-    title: 'DSA & Competitive Programming',
-    description: 'Systematic approach to data structures and algorithms. Crack coding interviews with confidence.',
-    duration: '16 weeks',
-    students: 420,
-    rating: 4.9,
-    level: 'All Levels',
-    modules: 64,
-    certified: true,
-  },
-  {
-    id: 5,
-    category: 'dsa',
-    icon: TrendingUp,
-    title: 'Advanced Problem Solving',
-    description: 'Master advanced algorithms, dynamic programming, and graph theory.',
-    duration: '8 weeks',
-    students: 95,
-    rating: 4.8,
-    level: 'Advanced',
-    modules: 28,
-    certified: true,
-  },
-  {
-    id: 6,
-    category: 'placement',
-    icon: TrendingUp,
-    title: 'Complete Placement Preparation',
-    description: 'Comprehensive roadmap covering aptitude, DSA, system design, and mock interviews.',
-    duration: '6 weeks',
-    students: 280,
-    rating: 4.9,
-    level: 'All Levels',
-    modules: 24,
-    certified: true,
-  },
-  {
-    id: 7,
-    category: 'placement',
-    icon: Shield,
-    title: 'System Design Fundamentals',
-    description: 'Learn to design scalable systems. Essential for senior engineering interviews.',
-    duration: '4 weeks',
-    students: 75,
-    rating: 4.7,
-    level: 'Advanced',
-    modules: 16,
-    certified: true,
-  },
-  {
-    id: 8,
-    category: 'softskills',
-    icon: Users,
-    title: 'Communication & Leadership',
-    description: 'Develop essential soft skills including public speaking, teamwork, and leadership.',
-    duration: '4 weeks',
-    students: 150,
-    rating: 4.6,
-    level: 'All Levels',
-    modules: 16,
     certified: false,
-  },
-  {
-    id: 9,
-    category: 'softskills',
-    icon: Users,
-    title: 'Technical Interview Skills',
-    description: 'Master the art of technical interviews - from resume building to offer negotiation.',
-    duration: '3 weeks',
-    students: 200,
-    rating: 4.8,
-    level: 'All Levels',
-    modules: 12,
-    certified: false,
-  },
-  {
-    id: 10,
-    category: 'webdev',
-    icon: Cloud,
-    title: 'Cloud & DevOps Essentials',
-    description: 'Learn AWS, Docker, CI/CD pipelines, and modern deployment practices.',
-    duration: '6 weeks',
-    students: 85,
-    rating: 4.7,
-    level: 'Intermediate',
-    modules: 24,
-    certified: true,
+    thumbnail: '/courses/gitGithubCrashCourse.jpg',
   },
 ];
 
@@ -209,60 +94,76 @@ export default function Courses() {
                 initial={{ opacity: 0, y: 30 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.4, delay: index * 0.05 }}
-                className="group flex flex-col p-6 rounded-2xl bg-card border border-border hover:border-primary/30 transition-all duration-300 hover-lift"
+                className="group flex flex-col rounded-2xl bg-card border border-border hover:border-primary/30 transition-all duration-300 hover-lift overflow-hidden"
               >
-                <div className="flex items-center justify-between mb-4">
-                  <div className="w-12 h-12 rounded-xl bg-accent flex items-center justify-center group-hover:bg-primary/10 transition-colors">
-                    <course.icon className="w-6 h-6 text-primary" />
-                  </div>
-                  <span className={cn('px-3 py-1 rounded-full text-xs font-medium', getLevelColor(course.level))}>
-                    {course.level}
-                  </span>
-                </div>
-
-                <h3 className="font-display text-lg font-semibold text-foreground mb-2 group-hover:text-primary transition-colors">
-                  {course.title}
-                </h3>
-                <p className="text-muted-foreground text-sm mb-4 flex-1 line-clamp-2">
-                  {course.description}
-                </p>
-
-                <div className="grid grid-cols-3 gap-2 mb-4 text-sm">
-                  <div className="flex items-center gap-1 text-muted-foreground">
-                    <Clock className="w-4 h-4" />
-                    {course.duration}
-                  </div>
-                  <div className="flex items-center gap-1 text-muted-foreground">
-                    <UsersIcon className="w-4 h-4" />
-                    {course.students}+
-                  </div>
-                  <div className="flex items-center gap-1 text-muted-foreground">
-                    <Star className="w-4 h-4 text-yellow-500" />
-                    {course.rating}
-                  </div>
-                </div>
-
-                <div className="flex items-center justify-between pt-4 border-t border-border">
-                  <span className="text-sm text-muted-foreground">
-                    {course.modules} modules
-                  </span>
-                  {course.certified && (
-                    <span className="text-xs font-medium text-primary bg-primary/10 px-2 py-1 rounded-full">
-                      Certificate Available
-                    </span>
+                {/* Thumbnail Section - Full Width */}
+                <div onClick={() => {
+                  window.open(course.url, '_blank');
+                }} className="w-full h-48 cursor-pointer bg-gray-200 overflow-hidden">
+                  {course.thumbnail ? (
+                    <img
+                      src={course.thumbnail}
+                      alt={course.title}
+                      className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+                    />
+                  ) : (
+                    <div className="w-full h-full bg-gradient-to-br from-primary/20 to-accent flex items-center justify-center">
+                      <course.icon className="w-16 h-16 text-primary" />
+                    </div>
                   )}
                 </div>
 
-                <Button className="mt-4 w-full" variant="outline">
-                  Start Learning
-                  <ArrowRight className="w-4 h-4" />
-                </Button>
+                {/* Content Section */}
+                <div className="flex flex-col p-6 flex-1">
+                  <div className="flex items-center justify-between mb-4">
+                    <span className={cn('px-3 py-1 rounded-full text-xs font-medium', getLevelColor(course.level))}>
+                      {course.level}
+                    </span>
+                    {course.certified && (
+                      <span className="text-xs font-medium text-primary bg-primary/10 px-2 py-1 rounded-full">
+                        Certificate
+                      </span>
+                    )}
+                  </div>
+
+                  <h3 className="font-display text-xl font-semibold text-foreground mb-3 group-hover:text-primary transition-colors">
+                    {course.title}
+                  </h3>
+                  <p className="text-muted-foreground text-sm mb-4 flex-1 line-clamp-3">
+                    {course.description}
+                  </p>
+
+                  <div className="grid grid-cols-3 gap-3 mb-4 text-sm">
+                    <div className="flex flex-col items-center text-center">
+                      <Clock className="w-4 h-4 text-muted-foreground mb-1" />
+                      <span className="text-xs text-muted-foreground">{course.duration}</span>
+                    </div>
+                    <div className="flex flex-col items-center text-center">
+                      <UsersIcon className="w-4 h-4 text-muted-foreground mb-1" />
+                      <span className="text-xs text-muted-foreground">{course.students}+</span>
+                    </div>
+                    <div className="flex flex-col items-center text-center">
+                      <Star className="w-4 h-4 text-yellow-500 mb-1" />
+                      <span className="text-xs text-muted-foreground">{course.rating}</span>
+                    </div>
+                  </div>
+
+                  <Button onClick={() => {
+                    window.open(course.url, '_blank');
+                  }} className="mt-4 w-full" variant="hero">
+                    Start Learning
+                    <ArrowRight className="w-4 h-4 ml-2" />
+                  </Button>
+                </div>
               </motion.div>
             ))}
           </div>
         </div>
       </section>
 
+      <div className="text-center font-extrabold text-xl md:text-4xl animate-bounce text-cyan-500">
+        More courses coming soon... Stay Tuned!!
+      </div>
       {/* CTA */}
       <section className="py-16 bg-secondary/30">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8 text-center">

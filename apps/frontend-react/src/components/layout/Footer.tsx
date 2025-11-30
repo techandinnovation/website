@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom';
-import { Zap, Github, Twitter, Linkedin, Instagram, Mail } from 'lucide-react';
+import { Zap, Github, Twitter, Linkedin, Instagram, Mail, Youtube } from 'lucide-react';
 
 const footerLinks = {
   platform: [
@@ -22,10 +22,10 @@ const footerLinks = {
 };
 
 const socialLinks = [
-  { icon: Github, href: '#', label: 'GitHub' },
-  { icon: Twitter, href: '#', label: 'Twitter' },
-  { icon: Linkedin, href: '#', label: 'LinkedIn' },
-  { icon: Instagram, href: '#', label: 'Instagram' },
+  { icon: Github, href: 'https://github.com/techandinnovation', label: 'GitHub' },
+  { icon: Youtube, href: 'https://youtube.com/@techandinnovationclub', label: 'Youtube' },
+  { icon: Linkedin, href: 'https://www.linkedin.com/company/tech-and-innovation', label: 'LinkedIn' },
+  { icon: Instagram, href: 'https://www.instagram.com/techandinnovationclub', label: 'Instagram' },
 ];
 
 export function Footer() {
@@ -37,9 +37,7 @@ export function Footer() {
             {/* Brand Section */}
             <div className="lg:col-span-2">
               <Link to="/" className="flex items-center gap-2 mb-4">
-                <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-primary to-primary-glow flex items-center justify-center">
-                  <Zap className="w-6 h-6 text-primary-foreground" />
-                </div>
+                <img src="/icon.png" width={60} alt="" />
                 <span className="font-display font-bold text-xl text-foreground">
                   Tech & Innovation
                 </span>
@@ -54,6 +52,7 @@ export function Footer() {
                     key={social.label}
                     href={social.href}
                     aria-label={social.label}
+                    target='_blank'
                     className="w-10 h-10 rounded-lg bg-secondary flex items-center justify-center text-muted-foreground hover:text-primary hover:bg-accent transition-colors"
                   >
                     <social.icon className="w-5 h-5" />
@@ -127,11 +126,11 @@ export function Footer() {
             © {new Date().getFullYear()} Tech & Innovation. All rights reserved.
           </p>
           <a
-            href="mailto:hello@techandinnovation.com"
+            href="mailto:techandinnovation@ggits.org"
             className="flex items-center gap-2 text-sm text-muted-foreground hover:text-primary transition-colors"
           >
             <Mail className="w-4 h-4" />
-            hello@techandinnovation.com
+            techandinnovation@ggits.org
           </a>
         </div>
       </div>

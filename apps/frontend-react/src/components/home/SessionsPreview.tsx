@@ -55,9 +55,8 @@ export function SessionsPreview() {
     <section className="py-20 lg:py-32">
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
         <SectionHeader
-          badge="🗓️ Sessions"
-          title="Live Learning Sessions"
-          description="Join interactive workshops and learn directly from industry experts"
+          title="Live Sessions. Real Mentors. Real Impact."
+          description="Join our weekly sessions and workshops led by industry experts and experienced seniors. Learn, interact, and build your network live"
         />
 
         <motion.div
@@ -70,7 +69,7 @@ export function SessionsPreview() {
           <div className="relative p-8 rounded-3xl bg-card border border-border overflow-hidden">
             {/* Glow effect */}
             <div className="absolute top-0 right-0 w-64 h-64 bg-primary/10 rounded-full blur-3xl" />
-            
+
             <div className="relative">
               <div className="flex items-center gap-2 mb-6">
                 <span className="flex items-center gap-1 px-3 py-1 rounded-full bg-destructive/10 text-destructive text-sm font-medium">

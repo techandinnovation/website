@@ -30,9 +30,8 @@ export function UpdatesPreview() {
     <section className="py-20 lg:py-32">
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
         <SectionHeader
-          badge="📢 Updates"
-          title="Stay in the Loop"
-          description="Latest hackathons, job opportunities, and internships curated for you"
+          title="The Latest in Innovation: Don't Miss Out"
+          description="Stay ahead with insights into cutting-edge technology, upcoming hackathons, and exclusive jobs and internships opportunities"
         />
 
         <div className="mt-12 grid md:grid-cols-2 gap-6 max-w-4xl mx-auto">
@@ -46,7 +45,7 @@ export function UpdatesPreview() {
               className="group relative p-6 rounded-2xl bg-card border border-border hover:border-primary/30 transition-all duration-300 hover-lift overflow-hidden"
             >
               <div className="absolute top-0 right-0 w-32 h-32 bg-gradient-to-br from-primary/10 to-transparent rounded-bl-full opacity-0 group-hover:opacity-100 transition-opacity" />
-              
+
               <div className="relative">
                 <div className="flex items-center gap-3 mb-4">
                   <div className={`w-10 h-10 rounded-lg ${update.color} flex items-center justify-center`}>
