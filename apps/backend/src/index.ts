@@ -13,7 +13,8 @@ const corsOptions = {
         // 'http://localhost:3001',
         'https://techandinnovation.org',
         'https://www.techandinnovation.org',
-        'https://techandinnovation.vercel.app'
+        'https://techandinnovation.vercel.app',
+	'https://tiadmin.vercel.app',
     ],
     credentials: true,
     optionsSuccessStatus: 200
