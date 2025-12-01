@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { motion } from 'framer-motion';
 import axios from 'axios';
 import { Layout } from '@/components/layout/Layout';
@@ -188,6 +188,16 @@ export default function Connect() {
     }
   };
 
+  useEffect(() => {
+    if (window.location.hash) {
+      const id = window.location.hash.replace("#", "");
+      const el = document.getElementById(id);
+      if (el) {
+        el.scrollIntoView({ behavior: "smooth" });
+      }
+    }
+  }, []);
+
   return (
     <Layout>
       {/* Hero */}
@@ -308,7 +318,7 @@ export default function Connect() {
       </section>
 
       {/* Feedback Section */}
-      <section className="py-16 bg-secondary/30">
+      <section id="feedback" className="py-16 bg-secondary/30">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8">
           <div className="max-w-3xl mx-auto">
             <SectionHeader
