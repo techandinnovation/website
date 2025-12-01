@@ -7,35 +7,13 @@ import { Link } from 'react-router-dom';
 const courses = [
   {
     icon: Code,
-    title: 'Full Stack Web Development',
-    description: 'Master React, Node.js, and modern web technologies from scratch to deployment',
-    students: '350+',
-    duration: '12 weeks',
+    thumbnail: '/courses/gitGithubCrashCourse.jpg',
+    title: 'Git & Github Crash Course',
+    description: 'Master the essential Git & GitHub commands in one short, beginner-focused crash course.',
+    students: '250+',
+    url: "https://youtu.be/EOkItVOgjeE",
+    duration: '30 Minutes',
     level: 'Beginner',
-  },
-  {
-    icon: Brain,
-    title: 'DSA & Competitive Programming',
-    description: 'Crack coding interviews with systematic problem-solving approaches',
-    students: '200+',
-    duration: '8 weeks',
-    level: 'Intermediate',
-  },
-  {
-    icon: Users,
-    title: 'Soft Skills & Leadership',
-    description: 'Communication, teamwork, and leadership skills for tech professionals',
-    students: '150+',
-    duration: '4 weeks',
-    level: 'All Levels',
-  },
-  {
-    icon: TrendingUp,
-    title: 'Placement Preparation',
-    description: 'Complete roadmap for campus placements with mock interviews',
-    students: '280+',
-    duration: '6 weeks',
-    level: 'Advanced',
   },
 ];
 
@@ -48,9 +26,12 @@ export function CoursesPreview() {
           description="From mastering Full Stack Development to building crucial soft skills and excelling in placement preparation. Get certified and get hired"
         />
 
-        <div className="mt-12 grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
+        <div className="mt-12 grid cursor-pointer sm:grid-cols-2 lg:grid-cols-4 gap-6">
           {courses.map((course, index) => (
             <motion.div
+              onClick={() => {
+                window.open(course.url, '_blank');
+              }}
               key={course.title}
               initial={{ opacity: 0, y: 30 }}
               whileInView={{ opacity: 1, y: 0 }}
@@ -58,8 +39,20 @@ export function CoursesPreview() {
               transition={{ duration: 0.5, delay: index * 0.1 }}
               className="group relative p-6 rounded-2xl bg-card border border-border hover:border-primary/30 transition-all duration-300 hover-lift"
             >
-              <div className="w-12 h-12 rounded-xl bg-accent flex items-center justify-center mb-4 group-hover:bg-primary/10 transition-colors">
-                <course.icon className="w-6 h-6 text-primary" />
+              <div onClick={() => {
+                window.open(course.url, '_blank');
+              }} className="w-full h-48 cursor-pointer bg-gray-200 overflow-hidden">
+                {course.thumbnail ? (
+                  <img
+                    src={course.thumbnail}
+                    alt={course.title}
+                    className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+                  />
+                ) : (
+                  <div className="w-full h-full bg-gradient-to-br from-primary/20 to-accent flex items-center justify-center">
+                    <course.icon className="w-16 h-16 text-primary" />
+                  </div>
+                )}
               </div>
 
               <h3 className="font-display text-lg font-semibold text-foreground mb-2 line-clamp-2">
