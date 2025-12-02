@@ -38,7 +38,7 @@ interface YouTubeSession {
 }
 
 const YOUTUBE_API_KEY = import.meta.env.VITE_YOUTUBE_API_KEY as string;
-const CHANNEL_ID = import.meta.env.VITE_YOUTUBE_CHANNEL_ID as string;
+const CHANNEL_ID = import.meta.env.VITE_CHANNEL_ID as string;
 
 // Cache duration in milliseconds (30 minutes = 30 * 60 * 1000)
 const CACHE_DURATION = 30 * 60 * 1000;
@@ -504,7 +504,7 @@ export function SessionsPreview() {
         />
 
         {/* API Usage Stats */}
-        <Card className="max-w-2xl mx-auto mb-6 bg-gradient-to-r from-blue-50 to-indigo-50 border-blue-200">
+        {/* <Card className="max-w-2xl mx-auto mb-6 bg-gradient-to-r from-blue-50 to-indigo-50 border-blue-200">
           <CardContent className="p-4">
             <div className="flex flex-col sm:flex-row items-center justify-between gap-4">
               <div className="flex items-center gap-3">
@@ -543,7 +543,7 @@ export function SessionsPreview() {
               </div>
             </div>
           </CardContent>
-        </Card>
+        </Card> */}
 
         <motion.div
           initial={{ opacity: 0, y: 30 }}
@@ -567,15 +567,6 @@ export function SessionsPreview() {
                   )}
 
                   <div className="px-8 pb-8">
-                    {upcomingSession.cached && (
-                      <Alert className="mb-6 bg-amber-50 border-amber-200">
-                        <AlertCircle className="h-4 w-4 text-amber-600" />
-                        <AlertDescription className="text-amber-800">
-                          <span className="font-semibold">Cached Data</span> • Last updated: {lastUpdated} •
-                          Auto-refresh in 30 minutes
-                        </AlertDescription>
-                      </Alert>
-                    )}
 
                     {error && !upcomingSession.cached && (
                       <Alert className="mb-6 bg-yellow-50 border-yellow-200">
@@ -655,7 +646,7 @@ export function SessionsPreview() {
                           href={upcomingSession.url}
                           target="_blank"
                           rel="noopener noreferrer"
-                          className="flex items-center justify-center gap-3"
+                          className="inline-flex items-center gap-2 cursor-pointer px-3 py-1.5 rounded-md"
                         >
                           <Youtube className="w-5 h-5" />
                           <span className="font-semibold">
@@ -668,7 +659,7 @@ export function SessionsPreview() {
                       <Button
                         variant="outline"
                         size="lg"
-                        className="flex-1 sm:flex-none gap-2 border-2 hover:border-primary/50 transition-all duration-300"
+                        className="inline-flex items-center gap-2 cursor-pointer px-3 py-1.5 rounded-md"
                         onClick={() => {
                           const shareData = {
                             title: upcomingSession.title,
@@ -690,7 +681,7 @@ export function SessionsPreview() {
 
                       <TooltipProvider>
                         <Tooltip>
-                          <TooltipTrigger asChild>
+                          {/* <TooltipTrigger asChild>
                             <Button
                               variant="ghost"
                               size="lg"
@@ -704,7 +695,7 @@ export function SessionsPreview() {
                                 <RefreshCw className="w-4 h-4" />
                               )}
                             </Button>
-                          </TooltipTrigger>
+                          </TooltipTrigger> */}
                           <TooltipContent>
                             <p>
                               {APITracker.canMakeCall()
@@ -717,6 +708,60 @@ export function SessionsPreview() {
                       </TooltipProvider>
                     </div>
                   </div>
+                  {upcomingSession.cached && (
+                    <Alert className="mb-6 bg-transparent">
+                      {/* <AlertCircle className="h-4 w-4" /> */}
+                      <AlertDescription className="text-gray-600 text-center">
+                        <span className="font-light">Cached Data</span> • Last updated: {lastUpdated} •
+                        Auto-refresh in 30 minutes
+                        <div>
+                          API Calls Today: <span className="font-bold">{apiCallsToday}/50</span>
+                        </div>
+                      </AlertDescription>
+                    </Alert>
+                  )}
+
+                  {/* API Usage Stats */}
+                  {/* <Card className="max-w-2xl mx-auto mb-6 bg-gradient-to-r from-blue-50 to-indigo-50 border-blue-200">
+                    <CardContent className="p-4">
+                      <div className="flex flex-col sm:flex-row items-center justify-between gap-4">
+                        <div className="flex items-center gap-3">
+                          <Shield className="w-5 h-5 text-blue-600" />
+                          <div>
+                            <p className="text-sm font-medium text-blue-900">API Protection Active</p>
+                            <p className="text-xs text-blue-700">
+                              Calls today: <span className="font-bold">{apiCallsToday}/50</span> •
+                              Cache: {upcomingSession?.cached ? '✅ Active' : '❌ Not active'}
+                            </p>
+                          </div>
+                        </div>
+                        <div className="flex items-center gap-2">
+                          <TooltipProvider>
+                            <Tooltip>
+                              <TooltipTrigger asChild>
+                                <Button
+                                  variant="outline"
+                                  size="sm"
+                                  onClick={handleClearCache}
+                                  className="text-xs"
+                                >
+                                  Clear Cache
+                                </Button>
+                              </TooltipTrigger>
+                              <TooltipContent>
+                                <p>Force fresh API call on next load</p>
+                              </TooltipContent>
+                            </Tooltip>
+                          </TooltipProvider>
+
+                          <Badge variant="outline" className="gap-1">
+                            <Clock className="w-3 h-3" />
+                            {lastUpdated || 'Just now'}
+                          </Badge>
+                        </div>
+                      </div>
+                    </CardContent>
+                  </Card> */}
                 </>
               )}
             </div>
