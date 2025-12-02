@@ -56,9 +56,7 @@ export default function Connect() {
 
   // Get backend URL - FIXED for React
   const getBackendUrl = () => {
-    // const backendUrl = process.env.REACT_APP_BACKEND_URL || 'http://localhost:3001'; // not working for some reason, vite-react issues will fix later!
-    // const backendUrl = 'http://localhost:3001';
-    const backendUrl = 'https://techandinnovation-api.vercel.app';
+    const backendUrl = import.meta.env.VITE_BACKEND_URL || 'http://localhost:3001';
     console.log('Backend URL:', backendUrl);
     return backendUrl;
   };
