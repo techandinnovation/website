@@ -434,7 +434,7 @@ export function SessionsPreview() {
                           rel="noopener noreferrer"
                           className="flex items-center justify-center gap-3"
                         >
-                          <div className="flex items-center gap-2">
+                          <div className="inline-flex items-center gap-2 cursor-pointer px-3 py-1.5 rounded-md">
                             <Youtube className="w-5 h-5" />
                             <span className="font-semibold">Watch on YouTube</span>
                           </div>
@@ -466,7 +466,7 @@ export function SessionsPreview() {
                               alert('Session link copied to clipboard!');
                             });
                           }
-                        }} className="flex cursor-pointer items-center gap-2">
+                        }} className="inline-flex items-center gap-2 cursor-pointer px-3 py-1.5 rounded-md">
                           <span className="font-semibold">Share</span>
                           <Share className="w-4 h-4" />
                         </div>
