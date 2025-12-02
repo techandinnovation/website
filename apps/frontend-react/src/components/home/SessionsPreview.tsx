@@ -34,8 +34,7 @@ interface YouTubeSession {
 }
 
 const YOUTUBE_API_KEY = import.meta.env.VITE_YOUTUBE_API_KEY as string;
-// const YOUTUBE_API_KEY = 'AIzaSyC_RXNCjh_5vc7LB00NBfdw6po-2xrrag0';
-const CHANNEL_ID = 'UC2kFjeEjNA_o3Q1pRedZHUQ';
+const CHANNEL_ID = import.meta.env.VITE_CHANNEL_ID as string;
 
 function CountdownTimer({ targetDate }: { targetDate: Date }) {
   const [timeLeft, setTimeLeft] = useState({ days: 0, hours: 0, minutes: 0, seconds: 0 });
