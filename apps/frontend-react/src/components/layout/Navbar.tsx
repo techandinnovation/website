@@ -12,7 +12,7 @@ const navLinks = [
   { href: '/updates', label: 'Updates' },
   { href: '/courses', label: 'Courses' },
   // { href: '/sessions', label: 'Sessions' },
-  // { href: '/gallery', label: 'Gallery' },
+  { href: '/gallery', label: 'Gallery' },
   // { href: '/forum', label: 'Forum' },
   { href: '/connect', label: 'Connect' },
 ];

@@ -1,142 +1,115 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Layout } from '@/components/layout/Layout';
 import { SectionHeader } from '@/components/shared/SectionHeader';
 import { Button } from '@/components/ui/button';
-import { X, Calendar, MapPin, Users, Play } from 'lucide-react';
+import { X, Calendar, MapPin, Users, Play, ChevronLeft, ChevronRight } from 'lucide-react';
 
-const categories = ['all', 'hackathons', 'workshops', 'events', 'community'];
-
+// Three events with folders inside the public folder:
+// public/gallery/fullstack/1.jpg .. n.jpg
+// public/gallery/nasa/1.jpg .. n.jpg
+// public/gallery/workshops/1.jpg .. n.jpg
 const galleryItems = [
   {
     id: 1,
-    category: 'hackathons',
-    title: 'NASA Space Apps Challenge 2024',
-    date: 'October 2024',
-    location: 'Campus Auditorium',
-    attendees: 200,
+    category: 'classes',
+    title: 'Full Stack Development Classes',
+    date: '2025',
+    location: 'Online / Campus',
+    attendees: 120,
     type: 'image',
-    placeholder: 'Hackathon Opening Ceremony',
+    placeholder: 'Full Stack Cohort',
+    folder: 'gallery/fullstack',
   },
   {
     id: 2,
     category: 'hackathons',
-    title: 'HackOverflow 2024',
-    date: 'November 2024',
-    location: 'Tech Lab',
-    attendees: 150,
+    title: 'NASA Space Apps Hackathon',
+    date: '2024',
+    location: 'Campus Auditorium',
+    attendees: 200,
     type: 'image',
-    placeholder: 'Teams Collaborating',
+    placeholder: 'NASA Space Apps',
+    folder: 'gallery/nasa',
   },
   {
     id: 3,
     category: 'workshops',
-    title: 'Full Stack Web Dev Training',
-    date: 'September 2024',
-    location: 'Main Hall',
-    attendees: 650,
-    type: 'image',
-    placeholder: 'Workshop Session',
-  },
-  {
-    id: 4,
-    category: 'workshops',
-    title: 'React Masterclass',
-    date: 'August 2024',
-    location: 'Conference Room',
+    title: 'Career Workshops',
+    date: '2025',
+    location: 'Lecture Hall',
     attendees: 80,
-    type: 'video',
-    placeholder: 'Video: React Session Highlights',
-  },
-  {
-    id: 5,
-    category: 'events',
-    title: 'Tech Talk Series',
-    date: 'July 2024',
-    location: 'Seminar Hall',
-    attendees: 120,
     type: 'image',
-    placeholder: 'Guest Speaker Session',
-  },
-  {
-    id: 6,
-    category: 'community',
-    title: 'Community Meetup',
-    date: 'June 2024',
-    location: 'Campus Grounds',
-    attendees: 100,
-    type: 'image',
-    placeholder: 'Community Gathering',
-  },
-  {
-    id: 7,
-    category: 'hackathons',
-    title: 'Code Sprint Finals',
-    date: 'May 2024',
-    location: 'Innovation Hub',
-    attendees: 75,
-    type: 'image',
-    placeholder: 'Winners Announcement',
-  },
-  {
-    id: 8,
-    category: 'workshops',
-    title: 'DSA Bootcamp',
-    date: 'April 2024',
-    location: 'Classroom A',
-    attendees: 200,
-    type: 'image',
-    placeholder: 'Intensive DSA Training',
-  },
-  {
-    id: 9,
-    category: 'events',
-    title: 'Annual Tech Fest',
-    date: 'March 2024',
-    location: 'Campus Wide',
-    attendees: 500,
-    type: 'video',
-    placeholder: 'Video: Tech Fest Highlights',
-  },
-  {
-    id: 10,
-    category: 'community',
-    title: 'Orientation Program',
-    date: 'February 2024',
-    location: 'Auditorium',
-    attendees: 300,
-    type: 'image',
-    placeholder: 'New Member Welcome',
-  },
-  {
-    id: 11,
-    category: 'workshops',
-    title: 'Git & GitHub Workshop',
-    date: 'January 2024',
-    location: 'Lab 3',
-    attendees: 90,
-    type: 'image',
-    placeholder: 'Hands-on Session',
-  },
-  {
-    id: 12,
-    category: 'hackathons',
-    title: 'Winter Hackathon',
-    date: 'December 2023',
-    location: 'Virtual',
-    attendees: 180,
-    type: 'image',
-    placeholder: 'Online Collaboration',
+    placeholder: 'Resume & LinkedIn Workshops',
+    folder: 'gallery/workshops',
   },
 ];
 
 export default function Gallery() {
   const [activeCategory, setActiveCategory] = useState('all');
-  const [selectedItem, setSelectedItem] = useState<typeof galleryItems[0] | null>(null);
+  const [selectedItem, setSelectedItem] = useState<typeof galleryItems[number] | null>(null);
+
+  const [lightboxImages, setLightboxImages] = useState<string[]>([]);
+  const [activeIndex, setActiveIndex] = useState(0);
+  const [loadingImages, setLoadingImages] = useState(false);
 
   const filteredItems = activeCategory === 'all'
     ? galleryItems
     : galleryItems.filter(item => item.category === activeCategory);
+
+  // Probe folder for images named 1.jpg, 2.jpg, ... until first missing (maxImages limit)
+  const probeImages = async (folder: string, maxImages = 40) => {
+    const found: string[] = [];
+    const loadImage = (src: string) => new Promise<boolean>((resolve) => {
+      const img = new Image();
+      img.onload = () => resolve(true);
+      img.onerror = () => resolve(false);
+      img.src = src;
+    });
+
+    for (let i = 1; i <= maxImages; i++) {
+      const src = `/${folder}/${i}.jpg`;
+      // await sequentially to avoid hammering network in parallel
+      // eslint-disable-next-line no-await-in-loop
+      const ok = await loadImage(src);
+      if (ok) found.push(src);
+      else break;
+    }
+
+    return found;
+  };
+
+  // When an item is selected, probe its folder and load image list
+  useEffect(() => {
+    let mounted = true;
+    if (!selectedItem) return undefined;
+
+    setLoadingImages(true);
+    setLightboxImages([]);
+    setActiveIndex(0);
+
+    (async () => {
+      if (!selectedItem.folder) return;
+      const imgs = await probeImages(selectedItem.folder);
+      if (!mounted) return;
+      setLightboxImages(imgs);
+      setLoadingImages(false);
+    })();
+
+    return () => { mounted = false; };
+  }, [selectedItem]);
+
+  // keyboard navigation for modal
+  useEffect(() => {
+    const onKey = (e: KeyboardEvent) => {
+      if (!selectedItem) return;
+      if (e.key === 'ArrowLeft') setActiveIndex((i) => (lightboxImages.length ? (i - 1 + lightboxImages.length) % lightboxImages.length : i));
+      if (e.key === 'ArrowRight') setActiveIndex((i) => (lightboxImages.length ? (i + 1) % lightboxImages.length : i));
+      if (e.key === 'Escape') setSelectedItem(null);
+    };
+    window.addEventListener('keydown', onKey);
+    return () => window.removeEventListener('keydown', onKey);
+  }, [selectedItem, lightboxImages]);
 
   return (
     <Layout>
@@ -145,32 +118,15 @@ export default function Gallery() {
         <div className="absolute inset-0 hero-gradient" />
         <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
           <SectionHeader
-            badge="🖼️ Gallery"
             title="Moments That Matter"
             description="Relive the highlights from our hackathons, workshops, and community events"
           />
         </div>
       </section>
 
-      {/* Filters & Gallery */}
+      {/* Gallery */}
       <section className="py-12">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-          {/* Category Filters */}
-          <div className="flex flex-wrap gap-2 mb-8 justify-center">
-            {categories.map((cat) => (
-              <Button
-                key={cat}
-                variant={activeCategory === cat ? 'default' : 'outline'}
-                size="sm"
-                onClick={() => setActiveCategory(cat)}
-                className="capitalize"
-              >
-                {cat}
-              </Button>
-            ))}
-          </div>
-
-          {/* Gallery Grid - Masonry Style */}
           <div className="columns-1 sm:columns-2 lg:columns-3 xl:columns-4 gap-4 space-y-4">
             {filteredItems.map((item, index) => (
               <motion.div
@@ -182,23 +138,30 @@ export default function Gallery() {
                 onClick={() => setSelectedItem(item)}
               >
                 <div className="relative rounded-2xl overflow-hidden bg-card border border-border hover:border-primary/30 transition-all duration-300">
-                  {/* Placeholder Image */}
-                  <div 
-                    className={`w-full bg-gradient-to-br from-accent to-secondary flex items-center justify-center ${
+                  <div
+                    className={`w-full flex items-center justify-center bg-muted ${
                       index % 3 === 0 ? 'aspect-[4/5]' : index % 3 === 1 ? 'aspect-square' : 'aspect-[4/3]'
-                    }`}
+                    } overflow-hidden`}
                   >
-                    <div className="text-center p-4">
-                      {item.type === 'video' && (
-                        <div className="w-12 h-12 rounded-full bg-primary/20 flex items-center justify-center mx-auto mb-2">
-                          <Play className="w-6 h-6 text-primary" />
-                        </div>
-                      )}
-                      <span className="text-muted-foreground text-sm">{item.placeholder}</span>
-                    </div>
+                    {item.folder ? (
+                      <img
+                        src={`/${item.folder}/1.jpg`}
+                        alt={item.title}
+                        className="w-full h-full object-cover"
+                        onError={(e) => { (e.currentTarget as HTMLImageElement).style.display = 'none'; }}
+                      />
+                    ) : (
+                      <div className="text-center p-4">
+                        {item.type === 'video' && (
+                          <div className="w-12 h-12 rounded-full bg-primary/20 flex items-center justify-center mx-auto mb-2">
+                            <Play className="w-6 h-6 text-primary" />
+                          </div>
+                        )}
+                        <span className="text-muted-foreground text-sm">{item.placeholder}</span>
+                      </div>
+                    )}
                   </div>
 
-                  {/* Overlay */}
                   <div className="absolute inset-0 bg-gradient-to-t from-background/90 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end p-4">
                     <div>
                       <h3 className="font-display font-semibold text-foreground text-sm mb-1">
@@ -223,7 +186,7 @@ export default function Gallery() {
         </div>
       </section>
 
-      {/* Lightbox Modal */}
+      {/* Modal / Lightbox */}
       <AnimatePresence>
         {selectedItem && (
           <motion.div
@@ -237,7 +200,7 @@ export default function Gallery() {
               initial={{ scale: 0.9, opacity: 0 }}
               animate={{ scale: 1, opacity: 1 }}
               exit={{ scale: 0.9, opacity: 0 }}
-              className="relative max-w-3xl w-full bg-card rounded-2xl overflow-hidden border border-border"
+              className="relative max-w-4xl w-full bg-card rounded-2xl overflow-hidden border border-border"
               onClick={(e) => e.stopPropagation()}
             >
               <Button
@@ -249,34 +212,71 @@ export default function Gallery() {
                 <X className="w-5 h-5" />
               </Button>
 
-              <div className="aspect-video bg-gradient-to-br from-accent to-secondary flex items-center justify-center">
-                <div className="text-center p-8">
-                  {selectedItem.type === 'video' && (
-                    <div className="w-16 h-16 rounded-full bg-primary/20 flex items-center justify-center mx-auto mb-4">
-                      <Play className="w-8 h-8 text-primary" />
+              <div className="bg-background">
+                <div className="relative bg-black/5 flex items-center justify-center">
+                  {loadingImages ? (
+                    <div className="p-12 text-center">Loading images...</div>
+                  ) : lightboxImages.length ? (
+                    <div className="w-full flex items-center justify-center">
+                      <button
+                        aria-label="previous"
+                        className="absolute left-4 z-20 p-2 rounded-full bg-background/60 hover:bg-background"
+                        onClick={() => setActiveIndex((i) => (lightboxImages.length ? (i - 1 + lightboxImages.length) % lightboxImages.length : i))}
+                      >
+                        <ChevronLeft className="w-6 h-6" />
+                      </button>
+
+                      <img
+                        src={lightboxImages[activeIndex]}
+                        alt={`${selectedItem.title} ${activeIndex + 1}`}
+                        className="max-h-[70vh] w-auto max-w-full object-contain"
+                      />
+
+                      <button
+                        aria-label="next"
+                        className="absolute right-4 z-20 p-2 rounded-full bg-background/60 hover:bg-background"
+                        onClick={() => setActiveIndex((i) => (lightboxImages.length ? (i + 1) % lightboxImages.length : i))}
+                      >
+                        <ChevronRight className="w-6 h-6" />
+                      </button>
+                    </div>
+                  ) : (
+                    <div className="p-12 text-center">No images found for this event.</div>
+                  )}
+                </div>
+
+                <div className="p-6">
+                  <h3 className="font-display text-xl font-semibold text-foreground mb-2">
+                    {selectedItem.title}
+                  </h3>
+                  <div className="flex flex-wrap items-center gap-4 text-sm text-muted-foreground">
+                    <span className="flex items-center gap-1">
+                      <Calendar className="w-4 h-4" />
+                      {selectedItem.date}
+                    </span>
+                    <span className="flex items-center gap-1">
+                      <MapPin className="w-4 h-4" />
+                      {selectedItem.location}
+                    </span>
+                    <span className="flex items-center gap-1">
+                      <Users className="w-4 h-4" />
+                      {selectedItem.attendees} attendees
+                    </span>
+                  </div>
+
+                  {lightboxImages.length > 1 && (
+                    <div className="mt-4 flex gap-2 overflow-x-auto">
+                      {lightboxImages.map((src, i) => (
+                        <button
+                          key={src}
+                          onClick={() => setActiveIndex(i)}
+                          className={`w-20 h-12 rounded overflow-hidden border ${i === activeIndex ? 'border-primary' : 'border-border'} flex-shrink-0`}
+                        >
+                          <img src={src} alt={`thumb-${i}`} className="w-full h-full object-cover" />
+                        </button>
+                      ))}
                     </div>
                   )}
-                  <span className="text-muted-foreground">{selectedItem.placeholder}</span>
-                </div>
-              </div>
-
-              <div className="p-6">
-                <h3 className="font-display text-xl font-semibold text-foreground mb-2">
-                  {selectedItem.title}
-                </h3>
-                <div className="flex flex-wrap items-center gap-4 text-sm text-muted-foreground">
-                  <span className="flex items-center gap-1">
-                    <Calendar className="w-4 h-4" />
-                    {selectedItem.date}
-                  </span>
-                  <span className="flex items-center gap-1">
-                    <MapPin className="w-4 h-4" />
-                    {selectedItem.location}
-                  </span>
-                  <span className="flex items-center gap-1">
-                    <Users className="w-4 h-4" />
-                    {selectedItem.attendees} attendees
-                  </span>
                 </div>
               </div>
             </motion.div>
