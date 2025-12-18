@@ -5,7 +5,7 @@ import { Link } from 'react-router-dom';
 import heroBg from '@/assets/hero-bg.png';
 
 const stats = [
-  { icon: Users, value: '1400+', label: 'Active Members' },
+  { icon: Users, value: '1800+', label: 'Active Members' },
   { icon: BookOpen, value: '25+', label: 'Courses' },
   { icon: Trophy, value: '10+', label: 'Hackathons' },
 ];
