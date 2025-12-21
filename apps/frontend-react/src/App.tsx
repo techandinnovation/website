@@ -13,6 +13,7 @@ import Gallery from "./pages/Gallery";
 import Forum from "./pages/Forum";
 import Connect from "./pages/Connect";
 import NotFound from "./pages/NotFound";
+import CppRedirect from "./pages/CppRedirect";
 
 const queryClient = new QueryClient();
 
@@ -32,6 +33,7 @@ const App = () => (
             <Route path="/gallery" element={<Gallery />} />
             <Route path="/forum" element={<Forum />} />
             <Route path="/connect" element={<Connect />} />
+            <Route path="/cpp" element={<CppRedirect />} />
             <Route path="*" element={<NotFound />} />
           </Routes>
         </BrowserRouter>
