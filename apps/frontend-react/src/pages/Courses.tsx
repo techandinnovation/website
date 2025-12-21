@@ -20,7 +20,7 @@ const categories = [
 const courses = [
   {
     id: 1,
-    category: 'all',
+    category: 'webdev',
     icon: Code,
     url: "https://youtu.be/EOkItVOgjeE",
     title: 'Git & GitHub Crash Course',
@@ -32,6 +32,21 @@ const courses = [
     modules: 48,
     certified: false,
     thumbnail: '/courses/gitGithubCrashCourse.jpg',
+  },
+  {
+    id: 2,
+    category: 'dsa',
+    icon: Code,
+    url: "https://youtu.be/9uDNJJpTjiM",
+    title: 'C++ Complete Course Part 1',
+    description: 'Learn C++ from scratch in Part 1 of this complete course, covering basics to intermediate concepts step by step.',
+    duration: '2 Hours 30 Minutes',
+    students: 150,
+    rating: 4.9,
+    level: 'Beginner',
+    modules: 48,
+    certified: false,
+    thumbnail: '/courses/cpp1.jpg',
   },
 ];
 

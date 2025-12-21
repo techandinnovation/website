@@ -15,6 +15,16 @@ const courses = [
     duration: '30 Minutes',
     level: 'Beginner',
   },
+  {
+    icon: Code,
+    thumbnail: '/courses/cpp1.jpg',
+    title: 'C++ Complete Course Part 1',
+    description: 'Learn C++ from scratch in Part 1 of this complete course, covering basics to intermediate concepts step by step.',
+    students: '150+',
+    url: "https://youtu.be/9uDNJJpTjiM",
+    duration: '2 Hours 30 Minutes',
+    level: 'Beginner',
+  }
 ];
 
 export function CoursesPreview() {
