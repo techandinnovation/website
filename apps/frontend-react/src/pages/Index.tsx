@@ -8,6 +8,7 @@ import { CTASection } from '@/components/home/CTASection';
 
 const Index = () => {
   return (
+    
     <Layout>
       <HeroSection />
       <UpdatesPreview />
