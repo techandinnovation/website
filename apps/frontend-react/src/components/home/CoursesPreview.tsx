@@ -31,7 +31,7 @@ const courses = [
     title: 'Start Competitive Programming | Codeforces (Part 1)',
     description: 'Confused about starting Competitive Programming? or Codeforces?, this video covers everything from scratch.',
     students: '200+',
-    url: "https://youtu.be/9uDNJJpTjiM",
+    url: "https://youtu.be/vL5lLZfgSCY",
     duration: '2 Hours 30 Minutes',
     level: 'Beginner',
   }

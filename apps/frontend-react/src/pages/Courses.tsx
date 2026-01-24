@@ -61,7 +61,7 @@ const courses = [
     level: 'Beginner',
     modules: 48,
     certified: false,
-    thumbnail: '/courses/cpp1.jpg',
+    thumbnail: '/courses/cpcfpart1.jpeg',
   },
 ];
 
