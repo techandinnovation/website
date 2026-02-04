@@ -14,6 +14,7 @@ import Forum from "./pages/Forum";
 import Connect from "./pages/Connect";
 import NotFound from "./pages/NotFound";
 import CppRedirect from "./pages/CppRedirect";
+import Web3CampRedirect from "./pages/Web3CampRedirect";
 
 const queryClient = new QueryClient();
 
@@ -34,6 +35,7 @@ const App = () => (
             <Route path="/forum" element={<Forum />} />
             <Route path="/connect" element={<Connect />} />
             <Route path="/cpp" element={<CppRedirect />} />
+            <Route path="/web3camp" element={<Web3CampRedirect />} />
             <Route path="*" element={<NotFound />} />
           </Routes>
         </BrowserRouter>
