@@ -37,7 +37,7 @@ export function Footer() {
             {/* Brand Section */}
             <div className="lg:col-span-2">
               <Link to="/" className="flex items-center gap-2 mb-4">
-                <img src="/icon.png" width={60} alt="" />
+                <img src="/TI_icon.png" width={80} alt="" />
                 <span className="font-display font-bold text-xl text-foreground">
                   Tech & Innovation
                 </span>

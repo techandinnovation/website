@@ -49,7 +49,7 @@ export function Navbar() {
           {/* Logo */}
           <Link to="/" className="flex items-center group">
             <div className="relative">
-              <img src="/icon.png" width={60} alt="" />
+              <img src="/TI_icon.png" width={80} alt="" />
               {/* <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-primary to-primary-glow flex items-center justify-center shadow-lg group-hover:shadow-xl transition-shadow">
                 <Zap className="w-6 h-6 text-primary-foreground" />
               </div> */}
